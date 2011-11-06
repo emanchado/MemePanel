@@ -1,5 +1,5 @@
 EXTENSION_TARGET = meme-panel.oex
-DIST_FILES = config.xml \
+DIST_FILES = config.xml icon.png \
 	     lib/*.js \
 	     index.html popup.html css/*.css images/*
 
