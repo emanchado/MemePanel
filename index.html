@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Meme panel</title>
+    <script>
+        var ToolbarUIItemProperties = {
+            disabled: false,
+            title: "Show meme panel",
+            icon: "images/button.png",
+            popup: {
+                href: "popup.html",
+                width: 400,
+                height: 400
+            }
+        };
+        theButton = opera.contexts.toolbar.createItem(ToolbarUIItemProperties);
+        opera.contexts.toolbar.addItem(theButton);
+    </script>
+  </head>
+  <body>
+    <h1>I don't think you're supposed to see this</h1>
+  </body>
+</html>

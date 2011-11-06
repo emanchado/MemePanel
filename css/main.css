@@ -1,0 +1,13 @@
+body {
+    font-size: 10pt;
+}
+
+h2 {
+    font-size: 12pt;
+}
+
+.stacked * {
+    margin: 0;
+    display: block;
+    width: 128px;
+}

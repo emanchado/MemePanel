@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:ng="http://angularjs.org">
+  <head>
+    <title>Meme panel</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <script src="lib/angular-0.9.19.min.js" ng:autobind />
+    <script src="lib/MemeGenerator.js" />
+    <script src="lib/MemePanelCtrl.js" />
+  </head>
+  <body ng:controller="MemePanelCtrl">
+    <form ng:show="showSearchBar()" ng:submit="search()" id="content" style="display: none">
+      <label for="search-memes-box">Search memes:</label>
+      <input id="search-memes-box" name="searchmemebox" type="text"
+             autofocus placeholder="keywords..." />
+      <input type="submit" value="Search" />
+    </form>
+
+    <div ng:show="mode=='init' && favouritePool.favourites().length > 0">
+      <h2>Favourites</h2>
+      <div ng:repeat="f in favouritePool.favourites()">
+        <img ng:show="isFavourite(f)" ng:click="removeFromFavourites(f)" src="images/star-on.png" />
+        <img ng:hide="isFavourite(f)" ng:click="addToFavourites(f)" src="images/star-off.png" />
+        <img ng:click="showMeme(f)" width="32"
+             src="http://version1.api.memegenerator.net{{f.imageUrl}}" />
+        <a ng:click="showMeme(f)">{{f.displayName}}</a>
+      </div>
+    </div>
+
+    <div ng:show="mode=='search-results'">
+      <h2>Results</h2>
+      <div ng:repeat="r in results">
+        <img ng:show="isFavourite(r)" ng:click="removeFromFavourites(r)" src="images/star-on.png" />
+        <img ng:hide="isFavourite(r)" ng:click="addToFavourites(r)" src="images/star-off.png" />
+        <img ng:click="showMeme(r)" width="32"
+             src="http://version1.api.memegenerator.net{{r.imageUrl}}" />
+        <a ng:click="showMeme(r)">{{r.displayName}}</a>
+      </div>
+    </div>
+
+    <div ng:show="mode=='show-meme'">
+      <h2>New '{{currentMeme.displayName}}' image</h2>
+      <form ng:submit="generateImage(currentMeme, topText, bottomText)">
+        <div class="stacked">
+          <img src="http://version1.api.memegenerator.net{{currentMeme.imageUrl}}"
+               width="256" />
+          <input type="text" name="topText" placeholder="Top text" autofocus />
+          <input type="text" name="bottomText" placeholder="Bottom text" />
+        </div>
+
+        <div class="button-bar">
+          <input type="submit" value="Done" />
+          <input type="button" value="Cancel" ng:click="mode = lastMode" />
+        </div>
+      </form>
+    </div>
+
+    <div ng:show="mode=='show-meme-instance'">
+      <h2>Your '{{currentMemeInstance.displayName}}' image</h2>
+      <img src="http://version1.api.memegenerator.net{{currentMemeInstance.instanceImageUrl}}"
+           width="256" style="text-align: center" />
+
+      <div>
+        Direct image:
+        <input type="text" name="imageUrl"
+               value="http://version1.api.memegenerator.net{{currentMemeInstance.instanceImageUrl}}"
+               size="40"
+               autofocus />
+      </div>
+
+      <div>
+        In Memegenerator:
+        <input type="text" name="memegeneratorUrl"
+               size="40"
+               value="{{currentMemeInstance.instanceUrl}}" />
+      </div>
+    </div>
+  </body>
+</html>

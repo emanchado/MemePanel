@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets">
+    <name>Meme panel</name>
+    <description>Create new meme images quickly</description>
+    <author href="http://hcoder.org/">Esteban Manchado Velázquez</author>
+    <access origin="http://version1.api.memegenerator.net" />
+</widget>
