@@ -43,8 +43,8 @@
       <form ng:submit="generateImage(currentMeme, topText, bottomText)">
         <div class="stacked">
           <img src="{{currentMeme.imageUrl|absolutify}}" width="256" />
-          <input type="text" name="topText" placeholder="Top text" autofocus />
-          <input type="text" name="bottomText" placeholder="Bottom text" />
+          <input type="text" id="topText" name="topText" placeholder="Top text" />
+          <input type="text" id="bottomText" name="bottomText" placeholder="Bottom text" />
         </div>
 
         <div class="button-bar">
@@ -64,17 +64,13 @@
 
       <div>
         Direct image:
-        <input type="text" name="imageUrl"
-               value="{{currentMemeInstance.instanceImageUrl|absolutify}}"
-               size="40"
-               autofocus />
+        <input type="text" id="imageUrl" name="imageUrl" value="" size="40" />
       </div>
 
       <div>
         In Memegenerator:
-        <input type="text" name="memegeneratorUrl"
-               size="40"
-               value="{{currentMemeInstance.instanceUrl}}" />
+        <input type="text" id="memegeneratorUrl" name="memegeneratorUrl"
+               size="40" value="" />
       </div>
     </div>
   </body>
