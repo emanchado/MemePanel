@@ -54,7 +54,10 @@
       </form>
     </div>
 
-    <div ng:show="mode=='show-meme-instance'">
+    <div ng:show="mode=='show-meme-instance' && error">
+      Cannot connect to MemeGenerator
+    </div>
+    <div ng:show="mode=='show-meme-instance' && ! error">
       <h2>Your '{{currentMemeInstance.displayName}}' image</h2>
       <img src="{{currentMemeInstance.instanceImageUrl|absolutify}}"
            width="256" style="text-align: center" />
