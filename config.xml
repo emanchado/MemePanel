@@ -4,4 +4,5 @@
     <description>Create new meme images quickly</description>
     <author href="http://hcoder.org/">Esteban Manchado Velázquez</author>
     <access origin="http://version1.api.memegenerator.net" />
+    <access origin="http://cdn.memegenerator.net" />
 </widget>
