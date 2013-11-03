@@ -44,8 +44,6 @@ exports.getBodyParts = function(config, modules) {
     var assert = modules.assert;
 
     return {
-        name: "memepanel",
-
         heads: [
             new RoboHydraHeadFilesystem({mountPath: '/cache',
                                          documentRoot: 'robohydra/cache'}),
@@ -53,23 +51,13 @@ exports.getBodyParts = function(config, modules) {
                                          documentRoot: 'robohydra/instances'})
         ],
 
-        tests: {
+        scenarios: {
             proxy: {
                 heads: [
-                    new RoboHydraHead({
-                        path: '/.*',
-                        handler: function(req, res, next) {
-                            req.headers.host = req.headers.host.replace(
-                                'localhost:3000',
-                                'version1.api.memegenerator.net'
-                            );
-                            next(req, res);
-                        }
-                    }),
-
                     new RoboHydraHeadProxy({
                         mountPath: '/',
-                        proxyTo: 'http://version1.api.memegenerator.net'
+                        proxyTo: 'http://version1.api.memegenerator.net',
+                        setHostHeader: true
                     })
                 ]
             },
@@ -107,21 +95,29 @@ exports.getBodyParts = function(config, modules) {
             },
 
             searchForFoo: {
+                instructions: "Search for the string 'foo'. Should show one result and show a test pass in the test result page.",
+
                 heads: [
                     new RoboHydraHead({
                         path: '/Generators_Search',
                         handler: function(req, res) {
-                            res.write(JSON.stringify({
-                                success: true,
-                                result:  [errorSearchResult]}));
+                            var r = assert.equal(
+                                req.getParams.q,
+                                'foo',
+                                "The 'q' parameter should be 'foo'"
+                            );
 
-                            assert.equal(req.getParams.q, 'foo',
-                                         "The 'q' parameter should be 'foo'");
-
-                            res.body = new Buffer(0);
-                            res.send(JSON.stringify({
-                                success: true,
-                                result:  [insanityWolfSearchResult]}));
+                            if (r) {
+                                res.send(JSON.stringify({
+                                    success: true,
+                                    result:  [insanityWolfSearchResult]
+                                }));
+                            } else {
+                                res.send(JSON.stringify({
+                                    success: true,
+                                    result:  [errorSearchResult]
+                                }));
+                            }
                         }
                     })
                 ]
@@ -129,6 +125,14 @@ exports.getBodyParts = function(config, modules) {
 
             createInstanceSimple: {
                 heads: [
+                    new RoboHydraHeadStatic({
+                        path: '/Generators_Search',
+                        content: {
+                            success: true,
+                            result:  [insanityWolfSearchResult]
+                        }
+                    }),
+
                     new RoboHydraHeadStatic({
                         path: '/Instance_Create',
                         content: simpleInstanceResult
