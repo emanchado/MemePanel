@@ -29,12 +29,17 @@
     <div ng:show="mode=='search-results'">
       <h2>Results</h2>
       <div ng:show="error">Cannot connect to MemeGenerator</div>
-      <div ng:show="! error" ng:repeat="r in results">
-        <img ng:show="isFavourite(r)" ng:click="removeFromFavourites(r)" src="images/star-on.png" />
-        <img ng:hide="isFavourite(r)" ng:click="addToFavourites(r)" src="images/star-off.png" />
-        <img ng:click="showMeme(r)" width="32"
-             src="{{r.imageUrl|absolutify}}" />
-        <a ng:click="showMeme(r)">{{r.displayName}}</a>
+      <div ng:show="! error">
+        <div ng:show="results.length == 0">
+          No search results
+        </div>
+        <div ng:show="results.length > 0" ng:repeat="r in results">
+          <img ng:show="isFavourite(r)" ng:click="removeFromFavourites(r)" src="images/star-on.png" />
+          <img ng:hide="isFavourite(r)" ng:click="addToFavourites(r)" src="images/star-off.png" />
+          <img ng:click="showMeme(r)" width="32"
+               src="{{r.imageUrl|absolutify}}" />
+          <a ng:click="showMeme(r)">{{r.displayName}}</a>
+        </div>
       </div>
     </div>
 
